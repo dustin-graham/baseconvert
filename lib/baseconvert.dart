@@ -123,7 +123,7 @@ List _fromBase10(int decimal, [outBase = 10]) {
   return converted.reversed.toList();
 }
 
-int _toBase10(List n, int inBase) {
+int _toBase10(List<num> n, int inBase) {
   /*
   Converts an integer in any base into it's decimal representation.
   Args:
@@ -134,7 +134,7 @@ int _toBase10(List n, int inBase) {
 
   int sum = 0;
   for (int i = 0; i < n.length; i++) {
-    sum += n.reversed.elementAt(i) * pow(inBase, i);
+    sum += n.reversed.elementAt(i) * pow(inBase, i) as int;
   }
   return sum;
 }
@@ -151,7 +151,7 @@ List _integerBase(List number, [int inBase = 10, int outBase = 10]) {
   Returns:
       A List of digits.*/
 
-  return _fromBase10(_toBase10(number, inBase), outBase);
+  return _fromBase10(_toBase10(number as List<num>, inBase), outBase);
 }
 
 List _fractionalBase(List fractionalPart,
@@ -449,7 +449,7 @@ base(dynamic number,
   number = _expandRecurring(number, repeat: 5);
   //Convert a fractional number
   if (number.contains(".")) {
-    int radixPoint = number.indexOf(".");
+    int? radixPoint = number.indexOf(".");
     List integerPart = number.sublist(0, radixPoint);
     List fractionalPart = number.sublist(radixPoint);
     integerPart = _integerBase(integerPart, inBase, outBase);
